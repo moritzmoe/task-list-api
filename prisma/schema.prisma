@@ -1,0 +1,25 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Session {
+    id      String   @id @db.VarChar(36)
+    created DateTime @default(now())
+    tasks   Task[]
+}
+
+model Task {
+    id          String  @id @db.VarChar(36)
+    name        String  @db.VarChar(64)
+    description String? @db.VarChar(1024)
+    completed   Boolean
+    created     DateTime @default(now())
+
+    session   Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+    sessionId String  @db.VarChar(36)
+}

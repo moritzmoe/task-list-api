@@ -1,0 +1,96 @@
+.task-list {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 300px;
+}
+
+.form-margin {
+  margin-top: 30px;
+}
+
+.text-input {
+  width: 60%;
+  padding: 5px 10px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  width: 60%;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.task {
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.task-name {
+  font-weight: bold;
+  padding: 10px;
+  background-color: #e7e7e7;
+}
+
+.task-description {
+  font-size: 13px;
+  font-style: italic;
+  padding: 15px;
+  background-color: #f6f6f6;
+}
+
+.controls {
+  display: flex;
+
+  .control-button {
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition-duration: 0.4s;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .delete-button {
+    background-color: #e41b17;
+  }
+
+  .delete {
+    background-color: #f6f6f6;
+    color: #e41b17;
+  }
+
+  .delete:hover {
+    background-color: #e41b17;
+    color: white;
+  }
+
+  .done-button {
+    background-color: green;
+  }
+
+  .done {
+    background-color: #f6f6f6;
+    color: green;
+  }
+
+  .done:hover {
+    background-color: green;
+    color: white;
+  }
+}
