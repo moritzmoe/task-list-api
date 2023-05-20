@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://tasks.moritzmoe.de';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const token = await getToken();
@@ -27,7 +27,7 @@ const loadTasks = async (token) => {
   const respJson = await response.json();
 
   list = document.getElementById('tasks');
-  list.innerHTML = "";
+  list.innerHTML = '';
 
   respJson.forEach((element) => {
     let task = document.createElement('div');
