@@ -6,30 +6,42 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadTasks(token);
 
   taskForm = document.getElementById('task-form');
-
   taskForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     await addTask(token);
     taskForm.reset();
   });
+
+  taskSearch = document.getElementById('search-task');
+  taskSearch.addEventListener('input', (e) => {
+    loadTasks(token, e.target.value)
+  })
+
 });
 
-const loadTasks = async (token) => {
+const loadTasks = async (token, search = "") => {
   const response = await fetch(
-    `${baseUrl}/api/tasks?` + new URLSearchParams({ take: 50 }),
+    `${baseUrl}/api/tasks?` + new URLSearchParams({ take: 50, query: search }),
     {
-      mode: 'cors',
       headers: {
         Authorization: `Bearer ${token}`,
       },
     },
   );
-  const respJson = await response.json();
+  const tasks = await response.json();
 
   list = document.getElementById('tasks');
   list.innerHTML = '';
 
-  respJson.forEach((element) => {
+  taskSearch = document.getElementById('search-task');
+  if(tasks.length === 0 && taskSearch.value === "" ) {
+    taskSearch.className = "hide"
+  } else {
+    taskSearch.className = "search-input"
+  }
+
+  // add a div for each task 
+  tasks.forEach((element) => {
     let task = document.createElement('div');
     task.className = 'task';
     task.innerHTML = `<div class="${
@@ -93,7 +105,6 @@ const markTaskAsDone = async (token, id) => {
 
   await fetch(`${baseUrl}/api/tasks/${id}`, {
     method: 'PUT',
-    mode: 'cors',
     body: JSON.stringify(completed),
     headers: {
       'content-type': 'application/json',
@@ -107,7 +118,6 @@ const markTaskAsDone = async (token, id) => {
 const deleteTask = async (token, id) => {
   await fetch(`${baseUrl}/api/tasks/${id}`, {
     method: 'DELETE',
-    mode: 'cors',
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -125,7 +135,6 @@ const getToken = async () => {
 
   const response = await fetch(`${baseUrl}/api/auth`, {
     method: 'POST',
-    mode: 'cors',
   });
   const respJson = await response.json();
 

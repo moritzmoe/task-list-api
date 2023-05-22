@@ -36,8 +36,8 @@ export class TasksService {
       where: {
         sessionId: { equals: sessionId },
         OR: [
-          { name: { contains: query } },
-          { description: { contains: query } },
+          { name: { contains: query, mode: 'insensitive' } },
+          { description: { contains: query, mode: 'insensitive' } },
         ],
       },
     });
