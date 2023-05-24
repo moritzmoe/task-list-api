@@ -7,8 +7,8 @@ import {
   HttpCode,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
-  Put,
   Query,
   Request,
   UseGuards,
@@ -99,6 +99,9 @@ export class TasksController {
   @ApiTooManyRequestsResponse({
     description:
       'You sent too many requests, the task cannot be retrieved right now. Try again in a few seconds.',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Token missing. Please provide a valid bearer token.',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -199,7 +202,7 @@ export class TasksController {
     +process.env.POST_PUT_DELETE_LIMIT || DEFAULT_POST_PUT_DELETE_LIMIT,
     +process.env.POST_PUT_DELETE_TTL || DEFAULT_POST_PUT_DELETE_TTL,
   )
-  @Put(':id')
+  @Patch(':id')
   async updateTask(
     @Request() req,
     @Param('id') taskId: string,
