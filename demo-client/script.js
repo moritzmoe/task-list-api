@@ -14,12 +14,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   taskSearch = document.getElementById('search-task');
   taskSearch.addEventListener('input', (e) => {
-    loadTasks(token, e.target.value)
-  })
-
+    loadTasks(token, e.target.value);
+  });
 });
 
-const loadTasks = async (token, search = "") => {
+const loadTasks = async (token, search = '') => {
   const response = await fetch(
     `${baseUrl}/api/tasks?` + new URLSearchParams({ take: 50, query: search }),
     {
@@ -34,13 +33,13 @@ const loadTasks = async (token, search = "") => {
   list.innerHTML = '';
 
   taskSearch = document.getElementById('search-task');
-  if(tasks.length === 0 && taskSearch.value === "" ) {
-    taskSearch.className = "hide"
+  if (tasks.length === 0 && taskSearch.value === '') {
+    taskSearch.className = 'hide';
   } else {
-    taskSearch.className = "search-input"
+    taskSearch.className = 'search-input';
   }
 
-  // add a div for each task 
+  // add a div for each task
   tasks.forEach((element) => {
     let task = document.createElement('div');
     task.className = 'task';
@@ -104,7 +103,7 @@ const markTaskAsDone = async (token, id) => {
   };
 
   await fetch(`${baseUrl}/api/tasks/${id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     body: JSON.stringify(completed),
     headers: {
       'content-type': 'application/json',
