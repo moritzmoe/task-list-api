@@ -1,4 +1,4 @@
-FROM node:18.16.0-alpine AS base
+FROM node:20.11-alpine AS base
 RUN npm i -g pnpm && mkdir /app
 
 FROM base as builder

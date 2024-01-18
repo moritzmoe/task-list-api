@@ -51,7 +51,7 @@ export class TasksController {
     <br/>
     This endpoint is paginated using limit offset / skip take pagination.<br/>
     The default page size is 10 tasks. The maximum page size is 50 tasks. 
-    `
+    `,
   })
   @ApiUnauthorizedResponse({
     description: 'Token missing. Please provide a valid bearer token.',
@@ -64,15 +64,30 @@ export class TasksController {
     description:
       'You sent too many requests, the list of task cannot be retrieved right now. Try again in a few seconds.',
   })
-  @ApiQuery({ name: 'take', required: false, description: 'How many tasks to load/take (limit).<br/>Default value: 10. Maximum value: 50'})
-  @ApiQuery({ name: 'skip', required: false, description: 'How many tasks to skip (offset).<br/>Default value: 0'})
-  @ApiQuery({ name: 'query', required: false, description: 'Search for a task by name or description'})
+  @ApiQuery({
+    name: 'take',
+    required: false,
+    description:
+      'How many tasks to load/take (limit).<br/>Default value: 10. Maximum value: 50',
+  })
+  @ApiQuery({
+    name: 'skip',
+    required: false,
+    description: 'How many tasks to skip (offset).<br/>Default value: 0',
+  })
+  @ApiQuery({
+    name: 'query',
+    required: false,
+    description: 'Search for a task by name or description',
+  })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Throttle(
-    +process.env.GET_LIMIT || DEFAULT_GET_LIMIT,
-    +process.env.GET_TTL || DEFAULT_GET_TTL,
-  )
+  @Throttle({
+    default: {
+      limit: +process.env.GET_LIMIT || DEFAULT_GET_LIMIT,
+      ttl: +process.env.GET_TTL || DEFAULT_GET_TTL,
+    },
+  })
   @Get('')
   async getTasks(
     @Request() req,
@@ -105,10 +120,12 @@ export class TasksController {
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Throttle(
-    +process.env.GET_LIMIT || DEFAULT_GET_LIMIT,
-    +process.env.GET_TTL || DEFAULT_GET_TTL,
-  )
+  @Throttle({
+    default: {
+      limit: +process.env.GET_LIMIT || DEFAULT_GET_LIMIT,
+      ttl: +process.env.GET_TTL || DEFAULT_GET_TTL,
+    },
+  })
   @Get(':id')
   async getTask(
     @Request() req,
@@ -139,10 +156,13 @@ export class TasksController {
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Throttle(
-    +process.env.POST_PUT_DELETE_LIMIT || DEFAULT_POST_PUT_DELETE_LIMIT,
-    +process.env.POST_PUT_DELETE_TTL || DEFAULT_POST_PUT_DELETE_TTL,
-  )
+  @Throttle({
+    default: {
+      limit:
+        +process.env.POST_PUT_DELETE_LIMIT || DEFAULT_POST_PUT_DELETE_LIMIT,
+      ttl: +process.env.POST_PUT_DELETE_TTL || DEFAULT_POST_PUT_DELETE_TTL,
+    },
+  })
   @Post('')
   async createTask(
     @Request() req,
@@ -169,10 +189,13 @@ export class TasksController {
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Throttle(
-    +process.env.POST_PUT_DELETE_LIMIT || DEFAULT_POST_PUT_DELETE_LIMIT,
-    +process.env.POST_PUT_DELETE_TTL || DEFAULT_POST_PUT_DELETE_TTL,
-  )
+  @Throttle({
+    default: {
+      limit:
+        +process.env.POST_PUT_DELETE_LIMIT || DEFAULT_POST_PUT_DELETE_LIMIT,
+      ttl: +process.env.POST_PUT_DELETE_TTL || DEFAULT_POST_PUT_DELETE_TTL,
+    },
+  })
   @HttpCode(204)
   @Delete(':id')
   async deleteTask(@Request() req, @Param('id') taskId: string) {
@@ -198,10 +221,13 @@ export class TasksController {
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Throttle(
-    +process.env.POST_PUT_DELETE_LIMIT || DEFAULT_POST_PUT_DELETE_LIMIT,
-    +process.env.POST_PUT_DELETE_TTL || DEFAULT_POST_PUT_DELETE_TTL,
-  )
+  @Throttle({
+    default: {
+      limit:
+        +process.env.POST_PUT_DELETE_LIMIT || DEFAULT_POST_PUT_DELETE_LIMIT,
+      ttl: +process.env.POST_PUT_DELETE_TTL || DEFAULT_POST_PUT_DELETE_TTL,
+    },
+  })
   @Patch(':id')
   async updateTask(
     @Request() req,

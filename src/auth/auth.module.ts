@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
@@ -23,15 +23,14 @@ import { DEFAULT_SESSION_POST_LIMIT, DEFAULT_SESSION_POST_TTL } from '../default
       }),
     }),
     ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        ttl:
-          +configService.get('SESSION_POST_TTL') ||
-          DEFAULT_SESSION_POST_TTL,
-        limit:
-          +configService.get('SESSION_POST_LIMIT') ||
-          DEFAULT_SESSION_POST_LIMIT,
-      }),
+      useFactory: async (configService: ConfigService) => [
+        {
+          ttl: +configService.get('SESSION_POST_TTL') || DEFAULT_SESSION_POST_TTL,
+          limit: +configService.get('SESSION_POST_LIMIT') || DEFAULT_SESSION_POST_LIMIT,
+        }
+      ]
     }),
   ],
   providers: [AuthService, JwtStrategy],

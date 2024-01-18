@@ -9,7 +9,7 @@ Uses [PostgreSQL](https://www.postgresql.org/) as database.
 ## Prerequisites
 
 - Docker Engine
-- Node.js (`v18.16.0`)
+- Node.js (`v20.11.0`)
 - pnpm (`v8.x.x`)
 
 ## Getting Started & Installation
